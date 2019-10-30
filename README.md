@@ -23,3 +23,8 @@ Usage:
            path to the ai that will play as player 1
       -s sleep time
            time(in second) to show the board(or move)
+
+		   
+		   
+To use timeout you have to add just above function play of AI the decorator @timeout(seconds=time), 
+time is the given timeout time (Eg: @timeout(seconds=0.1)).
