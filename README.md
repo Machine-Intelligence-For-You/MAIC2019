@@ -1,15 +1,25 @@
 # MAIC2019
 Third edition of the Mify Artificial Intelligence Contest #MIFY #AAAIBenin
 
+## Setup
+
+This code need **python 3.6+** to run so you need to install it
+
+It also need **PyQt5** that you install with the following commang
+
+```bash
+pip install pyqt5
+```
+
 Usage: 
 
-      python gameWindow.py -t timecredited -ai10 ia0file.py -ai1 ia1file.py -s sleeptime
+      python game_cli.py -t timecredited -ai10 ia0_file.py -ai1 ia1_file.py -s sleeptime
       
-      -t timecredited
+      -t time credited
           total number of seconds credited to each player
-      -ai0 ia0file.py
+      -ai0 ia0_file.py
           path to the ai that will play as player 0
-      -ai1 ia1file.py
+      -ai1 ia1_file.py
            path to the ai that will play as player 1
-      -s sleeptime
+      -s sleep time
            time(in second) to show the board(or move)
