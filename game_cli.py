@@ -3,11 +3,11 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
 from panel import Panel
 from board import Board
-from util import Trace, TimeoutError
-from player import Player
+from util import Trace
 from rulesgame import RulesGame
 import argparse
 import time
+
 
 class GameWindow(QMainWindow):
 
@@ -24,7 +24,7 @@ class GameWindow(QMainWindow):
         layout.addStretch()
         self.row=row
         self.col=col
-        self.players=players
+        self.players = players
         self.board = Board(row, col)
         self.board_size = (row, col)
         layout.addWidget(self.board)
@@ -110,7 +110,7 @@ class GameWindow(QMainWindow):
         aboutAction.triggered.connect(self.about)
         helpMenu.addAction(aboutAction)
 
-    def newGame(self,Thread):
+    def newGame(self):
         newGame = QMessageBox.question(self, 'New Game', "You're about to start a new Game.", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if newGame == QMessageBox.Yes:
             self.resetForNewGame()
@@ -122,51 +122,42 @@ class GameWindow(QMainWindow):
         self.board.resetBoard()
         self.board.score = [0, 0]
         self.gameOneGoing = True
-        self.rulesgame.gameOneGoing=True
-        # self.rulesgame = RulesGame(self.board)
+        self.rulesgame.gameOneGoing = True
+
 
         self.board.activeAllSquares()
         self.board.setCurrentPlayer(0)
         self.panel.resetPanelPlayer()
-        self.board.currentPlayer=0
+        self.board.currentPlayer = 0
 
-        self.rulesgame.canSteal=False
+        self.rulesgame.canSteal = False
 
         for player in self.players:
             player.reset_player_data()
 
 
     def startBattle(self):
-        i=0
+        hit = 0
 
         while self.rulesgame.gameOneGoing:
-
-        # while i<59:
             app.processEvents()
-            # print (self.board.get_board_array())
-            i+=1
+            hit += 1
             time.sleep(self.sleep_time)
-            try:
-                instruction = self.players[self.board.currentPlayer].play(self.depth_to_cover, self.board.get_board_array(), self.rulesgame.canSteal)
-            except TimeoutError:
-                print("TOOOOOOO LATE BRO")
-                self.random_player.set_score([self.players[self.board.currentPlayer].player_pieces,self.players[self.board.currentPlayer].player_pieces_in_hand, self.players[self.board.currentPlayer].captured_pieces])
-                instruction = self.random_player.play(self.depth_to_cover, self.board.get_board_array(), self.rulesgame.canSteal)
-       
-            
-            if self.rulesgame.canSteal:
-                print("Vole", instruction)
-
+            instruction = self.players[self.board.currentPlayer].play(self.depth_to_cover, self.board.get_board_array(), self.rulesgame.canSteal)
 
             self.random_player.set_score([self.players[self.board.currentPlayer].player_pieces,self.players[self.board.currentPlayer].player_pieces_in_hand, self.players[self.board.currentPlayer].captured_pieces])
+            way_of_move = "exactly"
+            if self.rulesgame.canSteal:
+                print("Stealing phase : ")
 
             if not self.rulesgame.is_a_possible_action(instruction, self.rulesgame.canSteal, self.board.currentPlayer):
-                print("Illegal move")
+                way_of_move = "randomly"
+                print(f"Illegal move were returned by {self.players[self.board.currentPlayer].get_name()}. A random choice will be made")
                 self.random_player.set_score([self.players[self.board.currentPlayer].player_pieces,self.players[self.board.currentPlayer].player_pieces_in_hand, self.players[self.board.currentPlayer].captured_pieces])
                 instruction = self.random_player.play(self.depth_to_cover, self.board.get_board_array(), self.rulesgame.canSteal)
-            print ("c'est i ",i," et joueur ",self.board.currentPlayer)
 
-            print(len(instruction), "test")
+            print(f'{self.players[self.board.currentPlayer].get_name()} (Player {self.board.currentPlayer}) {way_of_move} plays {instruction}')
+            print(f"It's the {hit}th hit played by Player {self.board.currentPlayer} ({self.players[self.board.currentPlayer].get_name()})")
             if not self.rulesgame.canSteal:
                 if len(instruction) == 2:
                     i, j = instruction
@@ -177,8 +168,8 @@ class GameWindow(QMainWindow):
                     i, j, k, l = instruction
                     self.board.squares[i][j].setBackgroundColor("blue")
                     self.board.squares[k][l].setBackgroundColor("green")
-                    time.sleep(self.sleep_time)
                     app.processEvents()
+                    time.sleep(self.sleep_time)
                     self.rulesgame.play(instruction)
                     app.processEvents()
             else:
@@ -186,8 +177,8 @@ class GameWindow(QMainWindow):
                     app.processEvents()
                     i, j = instruction
                     self.board.squares[i][j].setBackgroundColor("red")
-                    time.sleep(self.sleep_time)
                     app.processEvents()
+                    time.sleep(self.sleep_time)
                 self.rulesgame.play(instruction)
             self.board.setDefaultColors()
 
@@ -198,67 +189,58 @@ class GameWindow(QMainWindow):
 
 
         self.saveGame()
-        print ("C'est reelement nif")
-
-
+        print("\nIt's over.")
 
 
     def WhoWins(self):
-        # print ("checking")
-        print ("Hello World")
-        if(self.rulesgame.gameOneGoing == True):
+
+        if self.rulesgame.gameOneGoing:
             if (self.players[0].player_pieces_in_hand==0 and self.rulesgame.isPlayerStuck(1)) or self.players[0].captured_pieces==12:
-                print ("1 wins")
+                print(f"\nPlayer 0 ({self.players[0].get_name()}) wins")
                 end = QMessageBox.information(self, "End", f" {self.players[0].name} wins")
 
                 # self.gameOneGoing = False
             elif (self.players[1].player_pieces_in_hand==0 and self.rulesgame.isPlayerStuck(0)) or self.players[1].captured_pieces==12:
-                print ("2 wins")
+                print(f"\nPlayer 1 ({self.players[1].get_name()}) wins")
                 end = QMessageBox.information(self, "End", f" {self.players[1].name} wins")
                 # self.gameOneGoing = False
-            print ("----NO WINNER----")
+            print ("\nNo winner")
         else:
             if (self.players[0].captured_pieces>self.players[1].captured_pieces):
-                print ("1 wins")
+                print(f"\nPlayer 0 ({self.players[0].get_name()}) wins")
                 end = QMessageBox.information(self, "End", f" {self.players[0].name} wins")
             elif (self.players[0].captured_pieces<self.players[1].captured_pieces):
-                print ("2 wins")
+                print(f"\nPlayer 1 ({self.players[1].get_name()}) wins")
                 end = QMessageBox.information(self, "End", f" {self.players[1].name} wins")
             else:
-                print ("Equality")
+                print("Equality")
                 end = QMessageBox.information(self,"End", "No winner")
 
 
-
-
-    def loadStartBattle(self,actions,delay):
-        i=0
-
+    def loadStartBattle(self,actions, delay = 0.5):
+        hit = 0
         for action in actions:
             instruction=action[1]
             app.processEvents()
-            i+=1
+            hit += 1
             time.sleep(delay)
-            # instruction=self.players[self.board.currentPlayer].play(self.rulesgame.canSteal,self.boardToArray())
-            print ("c'est i ",i," et joueur ",self.board.currentPlayer)
-            print (instruction)
+            print(f"\nIt's the {hit}th hit played by Player {self.board.currentPlayer} ({self.players[self.board.currentPlayer].get_name()})")
+
             self.rulesgame.play(instruction)
             self.WhoWins()
-        print ("C'est reelement nif")
+        print("It's over.")
 
 
 
     def loadGame(self):
-        name =QtWidgets.QFileDialog.getOpenFileName(self, 'Load Game')
+        name = QtWidgets.QFileDialog.getOpenFileName(self, 'Load Game')
         listBoard = None
         listBoard = self.trace.load_trace(name[0])
         self.resetForNewGame()
         actions = listBoard.get_actions()
-        # print (actions)
-
         delay, ok = QInputDialog.getDouble(self,'Enter the delay','')
         if ok:
-            self.loadStartBattle(actions,delay)
+            self.loadStartBattle(actions, delay)
 
 
 
@@ -293,6 +275,7 @@ class GameWindow(QMainWindow):
             a0.accept()
         else:
             a0.ignore()
+
     def replayGame(self):
         import time
         self.resetForNewGame()
@@ -305,29 +288,22 @@ class GameWindow(QMainWindow):
                 warning = QMessageBox.warning(self, "Game Not ended", "This game is not yet finished. Load it to finish it")
             else:
                 self.board.resetBoard()
-                # print("Ok")
                 actions = listBoard.get_actions()
-                print(actions)
-                # print(len(actions))
-                # game.board.putListBoard(actions[1][3])
-                # time.sleep(1)
-                # game.board.putListBoard(actions[2][3])
 
                 for action in actions:
                     i+=1
                     app.processEvents()
                     if action[2] == 0:
-                        # print(i, action[3], action[0])
-                        # print("ok")
+
                         self.board.currentPlayer = action[0]
-                        # self.panel.updateCurrentPlayer()
+
                         self.board.putListBoard(action[3])
                         time.sleep(self.sleep_time)
                     elif action[2] == 1:
                         self.panel.updateScore(action[4])
                         self.board.score = action[4]
                         self.board.currentPlayer = action[0]
-                        # self.panel.updateCurrentPlayer()
+
                         self.board.putListBoard(actions[i-1][3])
                         origin=(action[1][0],action[1][1])
                         end=(-1,-1)
@@ -345,7 +321,7 @@ class GameWindow(QMainWindow):
 
 
 from randomplay import AI
-if __name__=="__main__":
+if __name__ == "__main__":
     import sys
     import ctypes
     myappid = 'myfi.maic.yote.1.0'
@@ -365,9 +341,7 @@ if __name__=="__main__":
     # set the time to play
     timeout = float(args.t) if args.t is not None else .05
     sleep_time = float(args.s) if args.s is not None else .150
-    
 
-    
     player_type = ['human', 'human']
     player_type[0] = args.ai0 if args.ai0 != None else 'human'
     player_type[1] = args.ai1 if args.ai1 != None else 'human'
@@ -392,18 +366,14 @@ if __name__=="__main__":
     if None in agents:
         raise Exception('Problems in  AI players instances. \n'
                         'Usage:\n'
-                        '-t timecredited \n'
+                        '-t time credited \n'
                         '\t total number of seconds credited to each player \n'
-                        '-ai0 ia0file.py \n'
+                        '-ai0 ai0_file.py \n'
                         '\t path to the ai that will play as player 0 \n'
-                        '-ai1 ia1file.py\n'
+                        '-ai1 ai1_file.py\n'
                         '\t path to the ai that will play as player 1 \n'
-                        '-s sleeptime \n'
+                        '-s sleep time \n'
                         '\t time(in second) to show the board(or move)')
     game = GameWindow(5, 6, agents, sleep_time=sleep_time, timeout=timeout)
-
-
-    # game.board.squares[2][2].setActive("red")
-
     game.show()
     sys.exit(app.exec_())

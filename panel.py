@@ -1,8 +1,7 @@
 # Created by HaroldKS at 21/08/2018
-# Created by HaroldKS at 21/08/2018
-from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import *
-from board import Board
+
 
 class Panel(QWidget):
 
@@ -100,7 +99,7 @@ class Panel(QWidget):
 
     def updateCurrentPlayer(self,currentPlayer):
         empty = QtGui.QPixmap(0,0)
-        arrow =  QtGui.QPixmap('pieces/arrow.png')
+        arrow = QtGui.QPixmap('pieces/arrow.png')
 
         if currentPlayer == 1:
             self.arrowWhite.setPixmap(arrow)
@@ -111,7 +110,7 @@ class Panel(QWidget):
 
     def resetPanelPlayer(self):
         empty = QtGui.QPixmap(0,0)
-        arrow =  QtGui.QPixmap('pieces/arrow.png')
+        arrow = QtGui.QPixmap('pieces/arrow.png')
         self.arrowWhite.setPixmap(empty)
         self.arrowBlack.setPixmap(arrow)
 
@@ -120,18 +119,3 @@ class Panel(QWidget):
     def updateScore(self, score,pieces_in_hands):
         self.score1.setText(str(score[0])+"["+str(pieces_in_hands[0])+"]")
         self.score2.setText(str(score[1])+"["+str(pieces_in_hands[1])+"]")
-        pass
-
-    def clearLost(self):
-        pass
-
-
-
-
-if __name__=="__main__":
-    import sys
-    app = QApplication(sys.argv)
-    board = Board(5)
-    panel = Panel(board, ['Harold', 'JB'])
-    panel.show()
-    sys.exit(app.exec_())

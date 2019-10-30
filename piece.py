@@ -1,6 +1,7 @@
 # Created by HaroldKS at 21/08/2018
 from PyQt5 import QtGui
 
+
 class Piece:
     def __init__(self, player_number, color):
         self.moveNumber = 0
@@ -13,9 +14,9 @@ class Piece:
             self.image_url = "pieces/CB.png"
 
     def getImage(self):
-        pixmap=QtGui.QPixmap()
+        pixmap = QtGui.QPixmap()
         pixmap.load(self.image_url)
-        pixmap=pixmap.scaledToHeight(80)
+        pixmap = pixmap.scaledToHeight(80)
         return pixmap
 
     def getColor(self):

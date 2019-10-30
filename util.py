@@ -13,7 +13,6 @@ class Trace:
         self.actions = []
         self.score = [0,0]
 
-
     def add_action(self, player, action, game_step, board, score,pieces_in_hands):
         self.actions.append((player, action, game_step, board, score,pieces_in_hands))
 
@@ -51,8 +50,10 @@ class Timeout():
     def raise_timeout(self, *args):
         raise Timeout.Timeout()
 
+
 class TimeoutError(Exception):
     pass
+
 
 def timeout(seconds=1, error_message=os.strerror(errno.ETIME)):
     def decorator(func):

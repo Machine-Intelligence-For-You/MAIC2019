@@ -1,13 +1,16 @@
 from abc import ABC, abstractmethod
 TILES_COLOR = ["black", "white"]
+
+
 class Player(ABC):
     name = "Player"
+
     def __init__(self, player_number, board_size):
         self.player_pieces = 12
         self.player_pieces_in_hand = 12
         self.captured_pieces = 0
         self.player_number = player_number
-        self.board_size = board_size # Is a tuple containing (row, col)
+        self.board_size = board_size  # Is a tuple containing (row, col)
         self.TILES_COLOR = ["black", "white"]
         self.color = TILES_COLOR[player_number]
 
@@ -26,7 +29,6 @@ class Player(ABC):
     def get_self_player_number(self):
         return self.player_number
 
-
     def get_score(self):
         return self.captured_pieces
 
@@ -41,11 +43,9 @@ class Player(ABC):
         playable = list()
         for i in range(row):
             for j in range(col):
-
                 if board[i][j] is not None and board[i][j].lower() == color.lower():
                     playable.append((i, j))
         return playable
-
 
     def is_place_on_board(self, cell):  # Check if the given cell exists on board
         i, j = cell
@@ -82,7 +82,6 @@ class Player(ABC):
                 [(-1, 0), (1, 0), (0, -1), (0, 1)]
                 if ((0 <= cell[0] + a[0] < row) and (0 <= cell[1] + a[1] < col))]
 
-
     def get_piece_actual_moves(self, board, cell, player_number):
         moves = list()
         i, j = cell
@@ -106,7 +105,6 @@ class Player(ABC):
         pieces = self.get_playable_pieces(board, player_number)
         moves = list()
         for piece in pieces:
-            print("Hekpa", piece, not self.get_piece_actual_moves(board, piece, player_number))
             if len(self.get_piece_actual_moves(board, piece, player_number)) > 0:
                 moves.append(piece)
         return moves
@@ -119,8 +117,3 @@ class Player(ABC):
 
     def piece_can_move(self, board, cell, player_number):
         return len(self.get_piece_actual_moves(board, cell, player_number)) != 0 and self.get_no_empty_cell_color(board, cell) == self.TILES_COLOR[player_number]
-
-
-
-    def steal(self, where = "hand"):
-        return where

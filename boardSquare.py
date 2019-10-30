@@ -12,7 +12,6 @@ class BoardSquare(QLabel, QWidget, QtCore.QObject):
         self.setMinimumSize(100, 100)
         self.setScaledContents(False)
         self.setAlignment(QtCore.Qt.AlignCenter)
-        # self.trigger.connect(GameWindow.coord)
         self.trigger = QtCore.pyqtSignal(int, int)
         self.col = col
         self.row = row

@@ -28,7 +28,6 @@ class Board(QWidget):
             for j in range(col):
                 square = BoardSquare(i, j)
                 gridLayout.addWidget(square, row-i, j)
-                # connect(chesssquares[i][j],SIGNAL(clicked(int,int)),this,SLOT(validateClick(int,int)));
                 tempList.append(square)
             self.squares.append(tempList)
         self.setDefaultColors()
@@ -36,7 +35,6 @@ class Board(QWidget):
 
 
     def add_piece(self, cell, player_number):
-        print ("Adding piece ",player_number)
         x,y=cell[0],cell[1]
         self.squares[x][y].setPiece(Piece(1, TILES_COLOR[player_number]))
         # self.grid[cell[0]][cell[1]]=TILES_COLOR[player_number]
@@ -50,14 +48,8 @@ class Board(QWidget):
         # self.remove_tile(initial_cell)
 
     def remove_piece(self, cell):
-
         x,y=cell[0],cell[1]
-
         self.squares[x][y].removePiece()
-        print (cell, "thanos")
-        # print ("bommm")
-        # self.grid[cell[0]][cell[1]]=None
-
 
     def setDefaultColors(self):
         for i in range(self.row):
@@ -72,7 +64,6 @@ class Board(QWidget):
                         self.squares[i][j].setBackgroundColor(self.whiteColor)
                     else:
                         self.squares[i][j].setBackgroundColor(self.blackColor)
-
 
     def setCurrentPlayer(self, player):
         self.currentPlayer = player
@@ -113,11 +104,3 @@ class Board(QWidget):
                     temp.append(self.squares[i][j].piece.getColor())
             list_board.append(temp)
         return list_board
-
-
-if __name__ == "__main__":
-    import sys
-    app = QApplication(sys.argv)
-    board = Board(5,6)
-    board.show()
-    sys.exit(app.exec_())
