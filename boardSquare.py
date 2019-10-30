@@ -1,4 +1,3 @@
-# Created by HaroldKS at 21/08/2018
 
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import *

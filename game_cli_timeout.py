@@ -149,7 +149,7 @@ class GameWindow(QMainWindow):
             except TimeoutError:
                 way_of_move = "randomly"
                 print(f"Player {self.players[self.board.currentPlayer]} ({self.players[self.board.currentPlayer].get_name()}) exhauted his time credit for this turn. A random choice will be made.")
-                self.random_player.set_score([self.players[self.board.currentPlayer].player_pieces,self.players[self.board.currentPlayer].player_pieces_in_hand, self.players[self.board.currentPlayer].captured_pieces])
+                self.random_player.set_states([self.players[self.board.currentPlayer].player_pieces,self.players[self.board.currentPlayer].player_pieces_in_hand, self.players[self.board.currentPlayer].captured_pieces,self.board.currentPlayer])
                 instruction = self.random_player.play(self.depth_to_cover, self.board.get_board_array(), self.rulesgame.canSteal)
 
 
@@ -160,7 +160,7 @@ class GameWindow(QMainWindow):
 
             if not self.rulesgame.is_a_possible_action(instruction, self.rulesgame.canSteal, self.board.currentPlayer):
                 print(f"Illegal move were returned by {self.players[self.board.currentPlayer].get_name()}. A random choice will be made")
-                self.random_player.set_score([self.players[self.board.currentPlayer].player_pieces,self.players[self.board.currentPlayer].player_pieces_in_hand, self.players[self.board.currentPlayer].captured_pieces])
+                self.random_player.set_states([self.players[self.board.currentPlayer].player_pieces,self.players[self.board.currentPlayer].player_pieces_in_hand, self.players[self.board.currentPlayer].captured_pieces,self.board.currentPlayer])
                 instruction = self.random_player.play(self.depth_to_cover, self.board.get_board_array(), self.rulesgame.canSteal)
 
             print(f'{self.players[self.board.currentPlayer].get_name()} (Player {self.board.currentPlayer}) {way_of_move} plays {instruction}')
@@ -307,7 +307,7 @@ class GameWindow(QMainWindow):
                         self.board.putListBoard(action[3])
                         time.sleep(self.sleep_time)
                     elif action[2] == 1:
-                        self.panel.updateScore(action[4])
+                        # self.panel.updateScore(action[4])
                         self.board.score = action[4]
                         self.board.currentPlayer = action[0]
 

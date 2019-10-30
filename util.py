@@ -1,4 +1,3 @@
-# Created by HaroldKS at 09/09/2018
 import pickle, signal, copy
 from functools import wraps
 import errno

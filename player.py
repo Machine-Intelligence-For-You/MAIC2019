@@ -32,10 +32,11 @@ class Player(ABC):
     def get_score(self):
         return self.captured_pieces
 
-    def set_score(self, score):
+    def set_states(self, score):
         self.player_pieces = score[0]
         self.player_pieces_in_hand = score[1]
         self.captured_pieces = score[2]
+        self.player_number=score[3]
 
     def get_playable_pieces(self, board, player_number):  # Return all on board player tiles coordinates
         color = TILES_COLOR[player_number]
