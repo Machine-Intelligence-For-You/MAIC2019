@@ -260,7 +260,7 @@ class GameWindow(QMainWindow):
         box.about(self, "Rules", rules)
 
     def about(self):
-        about = "MAIC 2019 Yote Game by MIFY"
+        about = "MAIC 2019 Yote Game by MIFY and AAAI Benin"
         box = QMessageBox()
         box.about(self, "About", about)
 
