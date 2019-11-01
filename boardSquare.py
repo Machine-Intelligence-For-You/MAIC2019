@@ -19,21 +19,7 @@ class BoardSquare(QLabel, QWidget, QtCore.QObject):
         self.piece = None
         self.active = False
         self.setStatusTip(self.toNotation())
-        #SquareColor
-        if col%2 == 0:
-            if row%2 == 0:
-                self.__setColor(1)
-                self.backgroundColor = "grey"
-            else:
-                self.__setColor(0)
-                self.backgroundColor = "white"
-        else:
-            if row%2 == 0:
-                self.__setColor(0)
-                self.backgroundColor = "white"
-            else:
-                self.__setColor(1)
-                self.backgroundColor = "grey"
+        self.backgroundColor = "white"
 
     def Active(self, active):
         self.active = active

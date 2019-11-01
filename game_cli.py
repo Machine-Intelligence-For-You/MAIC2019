@@ -43,14 +43,6 @@ class GameWindow(QMainWindow):
 
         self.random_player = AI(self.board.currentPlayer, self.board_size)
 
-
-
-    @QtCore.pyqtSlot(int, QGraphicsObject)
-    def coord(self):
-        print("fff")
-        # print(GameWindow.message)
-
-
     def createMenu(self):
         menu = self.menuBar()
         #Game Menu
@@ -140,7 +132,6 @@ class GameWindow(QMainWindow):
         hit = 0
 
         while self.rulesgame.gameOneGoing:
-            print(self.board.get_board_array())
             app.processEvents()
             hit += 1
             time.sleep(self.sleep_time)

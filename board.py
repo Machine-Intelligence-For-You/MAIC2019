@@ -14,13 +14,9 @@ class Board(QWidget):
         self.setFixedSize(100 * col, 100 * row)
         gridLayout = QGridLayout()
         gridLayout.setSpacing(0)
-        self.blackColor = "brown"
-        self.whiteColor = "#E0EEF1"
-        self.selectColor = "blue"
-        self.attackColor = "red"
         self.squares = list()
-        self.row=row
-        self.col=col
+        self.row = row
+        self.col = col
         self.grid = [[None for _ in range(row)] for _ in range(col)]
         self.currentPlayer = 0
         for i in range(row):
@@ -37,15 +33,12 @@ class Board(QWidget):
     def add_piece(self, cell, player_number):
         x,y=cell[0],cell[1]
         self.squares[x][y].setPiece(Piece(1, TILES_COLOR[player_number]))
-        # self.grid[cell[0]][cell[1]]=TILES_COLOR[player_number]
 
     def move_piece(self, initial_cell, destination_cell, player_number):
         x, y = destination_cell[0],destination_cell[1]
         self.squares[x][y].setPiece(Piece(1, TILES_COLOR[player_number]))
-        # self.add_tile(destination_cell)
         x,y=initial_cell[0],initial_cell[1]
         self.squares[x][y].removePiece()
-        # self.remove_tile(initial_cell)
 
     def remove_piece(self, cell):
         x,y=cell[0],cell[1]
@@ -54,16 +47,7 @@ class Board(QWidget):
     def setDefaultColors(self):
         for i in range(self.row):
             for j in range(self.col):
-                if i%2 == 0:
-                    if j%2 == 0:
-                        self.squares[i][j].setBackgroundColor(self.blackColor)
-                    else:
-                        self.squares[i][j].setBackgroundColor(self.whiteColor)
-                else:
-                    if j%2 == 0:
-                        self.squares[i][j].setBackgroundColor(self.whiteColor)
-                    else:
-                        self.squares[i][j].setBackgroundColor(self.blackColor)
+                self.squares[i][j].setStyleSheet("border: 1px solid black; background-color : white")
 
     def setCurrentPlayer(self, player):
         self.currentPlayer = player

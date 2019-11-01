@@ -19,7 +19,7 @@ class AI(Player):
     def get_player_name(self):
         return self.name
     
-    @timeout(seconds=0.1)
+
     def play(self, depth_to_cover, board, can_steal):
         if can_steal:
             ennemyPieces=[]
