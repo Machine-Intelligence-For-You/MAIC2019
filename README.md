@@ -78,5 +78,5 @@ Now to run it you will have to use another file which is **game_cli_timeout.py**
 
 **Example:**
         
-         python game_cli_timeout.py -ai0 ia_0.py -ai1 ia_1.py -s 0.5
+         python game_cli_timeout.py -ai0 ai_0.py -ai1 ai_1.py -s 0.5
         
