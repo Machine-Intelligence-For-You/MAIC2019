@@ -8,7 +8,7 @@ TILES_COLOR = ["Black", "green"]
 class AI(Player):
 
     # Team modify this
-    name = "Dark Vador"
+    name = "Anakin Skywalker"
 
     def __init__(self, player_number, board_size):
         Player.__init__(self, player_number, board_size)
