@@ -34,7 +34,7 @@ Firstly, just clone this repository or download the zip to get everything you ne
 
 **Usage:**
 
-      python game_cli.py -ai0 ia_0.py -ai1 ia_1.py -s 0.5
+      python game_cli.py -ai0 ai_0.py -ai1 ai_1.py -s 0.5
       
       
       -ai0 
@@ -49,7 +49,7 @@ Firstly, just clone this repository or download the zip to get everything you ne
         
         git clone https://github.com/Machine-Intelligence-For-You/MAIC2019.git
         cd MAIC2019/
-        python game_cli.py -ai0 ia0.py -ai1 ia1.py -s 0.5
+        python game_cli.py -ai0 ai_0.py -ai1 ai_1.py -s 0.5
         
 
 
