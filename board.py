@@ -1,4 +1,4 @@
-TILES_COLOR = ["black", "white"]
+TILES_COLOR = ["black", "green"]
 
 from PyQt5.QtWidgets import *
 from piece import Piece
@@ -9,7 +9,7 @@ class Board(QWidget):
     def __init__(self, row, col, parent = None):
         super(Board, self).__init__(parent)
         self.currentPlayer = 0
-        self.color = ["black", "white"]
+        self.color = ["black", "green"]
         self.score = [0, 0]
         self.setFixedSize(100 * col, 100 * row)
         gridLayout = QGridLayout()
@@ -90,8 +90,8 @@ class Board(QWidget):
                     self.squares[i][j].removePiece()
                 elif listBoard[i][j] == "black":
                     self.squares[i][j].setPiece(Piece(0, "black"))
-                elif listBoard[i][j] == "white":
-                    self.squares[i][j].setPiece(Piece(1, "white"))
+                elif listBoard[i][j] == "green":
+                    self.squares[i][j].setPiece(Piece(1, "green"))
 
     def get_board_array(self):
         list_board = []

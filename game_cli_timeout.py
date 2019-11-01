@@ -1,5 +1,5 @@
 # Created by HaroldKS at 30/10/2019 : 10:38
-TILES_COLOR = ["black", "white"]
+TILES_COLOR = ["black", "green"]
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
 from panel import Panel
@@ -264,7 +264,7 @@ class GameWindow(QMainWindow):
 
     def gameRules(self):
         rules = "Yoté Rules \n " \
-                "The game is played on a 5×6 board, which is empty at the beginning of the game. Each player has twelve pieces in hand. Players alternate turns, with White moving first. In a move, a player may either: \n" \
+                "The game is played on a 5×6 board, which is empty at the beginning of the game. Each player has twelve pieces in hand. Players alternate turns, with White(or green) moving first. In a move, a player may either: \n" \
                 "-Place a piece in hand on any empty cell of the board. \n" \
                 "-Move one of their pieces already on the board orthogonally to an empty adjacent cell. \n" \
                 "-Capture an opponent's piece if it is orthogonally adjacent to a player's piece, by jumping to the empty cell immediately beyond it. The captured piece is removed from the board, and the capturing player removes another of the opponent's pieces of his choosing from the board. \n" \

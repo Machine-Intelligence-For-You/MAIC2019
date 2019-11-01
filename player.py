@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-TILES_COLOR = ["black", "white"]
+TILES_COLOR = ["black", "green"]
 
 
 class Player(ABC):

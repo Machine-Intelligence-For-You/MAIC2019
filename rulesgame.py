@@ -1,4 +1,4 @@
-TILES_COLOR = ["black", "white"]
+TILES_COLOR = ["black", "green"]
 import math
 
 

@@ -2,7 +2,7 @@
 import random
 from util import timeout
 from player import Player
-TILES_COLOR = ["Black", "White"]
+TILES_COLOR = ["Black", "green"]
 
 
 class AI(Player):

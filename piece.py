@@ -7,7 +7,7 @@ class Piece:
         self.color = color
         self.player = player_number
 
-        if color == "white":
+        if color == "green":
             self.image_url = "pieces/CV.png"
         else:
             self.image_url = "pieces/CB.png"
