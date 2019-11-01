@@ -126,11 +126,11 @@ class GameWindow(QMainWindow):
         self.rulesgame.gameOneGoing = True
 
         self.board.activeAllSquares()
-        self.board.setCurrentPlayer(0)
         self.panel.resetPanelPlayer()
         self.board.currentPlayer = 0
 
-        self.rulesgame.canSteal=False
+        self.rulesgame.canSteal = False
+        self.board.setDefaultColors()
 
         for player in self.players:
             player.reset_player_data()
@@ -197,6 +197,7 @@ class GameWindow(QMainWindow):
 
         self.saveGame()
         print("\nIt's over.")
+        self.board.setDefaultColors()
 
     def WhoWins(self):
 
@@ -227,6 +228,7 @@ class GameWindow(QMainWindow):
 
     def loadStartBattle(self,actions, delay = 0.5):
         hit = 0
+        self.board.setDefaultColors()
         for action in actions:
             instruction=action[1]
             app.processEvents()
@@ -241,6 +243,7 @@ class GameWindow(QMainWindow):
 
 
     def loadGame(self):
+        self.board.setDefaultColors()
         name =QtWidgets.QFileDialog.getOpenFileName(self, 'Load Game')
         listBoard = None
         listBoard = self.trace.load_trace(name[0])
