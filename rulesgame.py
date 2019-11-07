@@ -103,10 +103,12 @@ class RulesGame:
             for a in instruction:
                 if not isinstance(a, int):
                     return False
-            if not self.get_no_empty_cell_color(instruction) == TILES_COLOR[(player_number +  1)%2]:
+            if instruction[0] == instruction[1] == -1:
+                if self.players[(player_number + 1)%2].player_pieces_in_hand > 0:
+                    return True
                 return False
-            elif instruction[0] == instruction[1] == -1:
-                return True
+            elif not self.get_no_empty_cell_color(instruction) == TILES_COLOR[(player_number +  1)%2]:
+                return False
         return True
 
     def get_movable_pieces_by_player(self, player_number):  # Returns for a player all the pieces he can move
@@ -137,6 +139,10 @@ class RulesGame:
                 print ("Steal in the adversary hand")
                 self.players[(self.board.currentPlayer+1)%2].player_pieces_in_hand-=1
                 self.players[self.board.currentPlayer].captured_pieces+=1
+                self.board.currentPlayer=(self.board.currentPlayer+1)%2
+                self.checkForEnd()
+                self.panel.updateCurrentPlayer(self.board.currentPlayer)
+                self.canSteal = False
 
             elif(self.canSteal and board.squares[instruction[0]][instruction[1]].isPiece()):
                 if board.squares[instruction[0]][instruction[1]].piece.getColor()!=color:
