@@ -11,7 +11,7 @@ class Player(ABC):
         self.captured_pieces = 0
         self.player_number = player_number
         self.board_size = board_size  # Is a tuple containing (row, col)
-        self.TILES_COLOR = ["black", "white"]
+        self.TILES_COLOR = ["black", "green"]
         self.color = TILES_COLOR[player_number]
 
     def reset_player_data(self):
