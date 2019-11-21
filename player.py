@@ -25,7 +25,10 @@ class Player(ABC):
 
     def get_name(self):
         return self.name
-
+    
+    def set_name(self,name):
+        self.name=name
+    
     def get_self_player_number(self):
         return self.player_number
 

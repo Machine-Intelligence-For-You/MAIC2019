@@ -36,10 +36,10 @@ class Panel(QWidget):
 
         #Player 1 Name
 
-        name1 = QLabel(self.playersName[0], self)
-        name1.setAlignment(QtCore.Qt.AlignCenter)
-        name1.setFont(QtGui.QFont("Times", 14, QtGui.QFont.Bold))
-        layout.addWidget(name1)
+        self.name1 = QLabel(self.playersName[0], self)
+        self.name1.setAlignment(QtCore.Qt.AlignCenter)
+        self.name1.setFont(QtGui.QFont("Times", 14, QtGui.QFont.Bold))
+        layout.addWidget(self.name1)
 
         #Score Player 1
         self.score1 =QLabel("0[12]", self)
@@ -74,10 +74,10 @@ class Panel(QWidget):
         layout.addLayout(horizontal4)
 
         #Player 2 Name
-        name2 = QLabel(self.playersName[1], self)
-        name2.setAlignment(QtCore.Qt.AlignCenter)
-        name2.setFont(QtGui.QFont("Times", 14, QtGui.QFont.Bold))
-        layout.addWidget(name2)
+        self.name2 = QLabel(self.playersName[1], self)
+        self.name2.setAlignment(QtCore.Qt.AlignCenter)
+        self.name2.setFont(QtGui.QFont("Times", 14, QtGui.QFont.Bold))
+        layout.addWidget(self.name2)
 
         #Score Player 2
         self.score2 =QLabel("0[12]", self)
@@ -93,7 +93,11 @@ class Panel(QWidget):
         layout.addStretch()
         self.setLayout(layout)
         self.updateCurrentPlayer(0)
-
+        
+        
+    def updatePlayersName(self,playerNames):
+        self.name1.setText(playerNames[0])
+        self.name2.setText(playerNames[1])
     def setCurrentPlayer(self, player):
         pass
 

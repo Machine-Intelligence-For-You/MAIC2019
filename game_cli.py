@@ -189,24 +189,31 @@ class GameWindow(QMainWindow):
         if self.rulesgame.gameOneGoing:
             if (self.players[0].player_pieces_in_hand==0 and self.rulesgame.isPlayerStuck(1)) or self.players[0].captured_pieces==12:
                 print(f"\nPlayer 0 ({self.players[0].get_name()}) wins")
+                print("Final score : ",self.players[0].get_name()," ",self.players[0].captured_pieces," ",self.players[1].captured_pieces," ",self.players[1].get_name())
                 end = QMessageBox.information(self, "End", f" {self.players[0].name} wins")
 
                 # self.gameOneGoing = False
             elif (self.players[1].player_pieces_in_hand==0 and self.rulesgame.isPlayerStuck(0)) or self.players[1].captured_pieces==12:
                 print(f"\nPlayer 1 ({self.players[1].get_name()}) wins")
+                print("Final score : ",self.players[0].get_name()," ",self.players[0].captured_pieces," ",self.players[1].captured_pieces," ",self.players[1].get_name())
                 end = QMessageBox.information(self, "End", f" {self.players[1].name} wins")
                 # self.gameOneGoing = False
             print ("\nNo winner")
         else:
             if (self.players[0].captured_pieces>self.players[1].captured_pieces):
                 print(f"\nPlayer 0 ({self.players[0].get_name()}) wins")
+                print("Final score : ",self.players[0].get_name()," ",self.players[0].captured_pieces," ",self.players[1].captured_pieces," ",self.players[1].get_name())
                 end = QMessageBox.information(self, "End", f" {self.players[0].name} wins")
             elif (self.players[0].captured_pieces<self.players[1].captured_pieces):
                 print(f"\nPlayer 1 ({self.players[1].get_name()}) wins")
+                print("Final score : ",self.players[0].get_name()," ",self.players[0].captured_pieces," ",self.players[1].captured_pieces," ",self.players[1].get_name())
                 end = QMessageBox.information(self, "End", f" {self.players[1].name} wins")
             else:
                 print("Equality")
+                print("Final score : ",self.players[0].get_name()," ",self.players[0].captured_pieces," ",self.players[1].captured_pieces," ",self.players[1].get_name())
                 end = QMessageBox.information(self,"End", "No winner")
+
+
 
 
     def loadStartBattle(self,actions, delay = 0.5):
@@ -227,14 +234,37 @@ class GameWindow(QMainWindow):
 
     def loadGame(self):
         self.board.setDefaultColors()
-        name = QtWidgets.QFileDialog.getOpenFileName(self, 'Load Game')
+        name =QtWidgets.QFileDialog.getOpenFileName(self, 'Load Game')
         listBoard = None
-        listBoard = self.trace.load_trace(name[0])
-        self.resetForNewGame()
-        actions = listBoard.get_actions()
-        delay, ok = QInputDialog.getDouble(self,'Enter the delay','')
-        if ok:
-            self.loadStartBattle(actions, delay)
+        try:
+            listBoard = self.trace.load_trace(name[0])
+
+            self.resetForNewGame()
+            actions = listBoard.get_actions()
+            delay, ok = QInputDialog.getDouble(self,'Enter the delay','')
+            if ok:
+                newnames=[]
+                try:
+
+                    if(len(str(name[0]).split("/"))>0):
+                        temp=str(name[0]).split("/")
+                        newnames=temp[len(temp)-1].split(".")[0].split("-")
+                        #self.players[0].set_name(newnames[0])
+                        #self.players[1].set_name(newnames[1])
+                    elif(len(str(name[0]).split("\\"))>1):
+                        temp=str(name[0]).split("\\")
+                        newnames=temp[len(temp)-1].split(".")[0].split("-")
+                        #self.players[0].set_name(newnames[0])
+                        #self.players[1].set_name(newnames[1])
+                except :
+                    newnames=["IA1","IA2"]
+                self.players[0].set_name(newnames[0])
+                self.players[1].set_name(newnames[1])
+                self.panel.updatePlayersName(newnames)
+                self.loadStartBattle(actions, delay)
+        except:
+            print("No file selected or File name isn't on this fomat Player1-Player2.trace")
+
 
 
 
@@ -246,8 +276,8 @@ class GameWindow(QMainWindow):
             warning = QMessageBox.warning(self, "Warning", "No game ongoing")
 
     def exitGame(self):
+        sys.exit(app.exec_())
         return True
-
     def gameRules(self):
         rules = "Yoté Rules \n " \
                 "The game is played on a 5×6 board, which is empty at the beginning of the game. Each player has twelve pieces in hand. Players alternate turns, with White(or green) moving first. In a move, a player may either: \n" \
