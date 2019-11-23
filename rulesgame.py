@@ -94,6 +94,8 @@ class RulesGame:
             if len(instruction) == 2:
                 if not self.is_empty_cell(instruction):
                     return False
+                if self.players[player_number].player_pieces_in_hand == 0:
+                    return False
             elif len(instruction) == 4:
                 if (instruction[2], instruction[3]) not in self.get_piece_actual_moves((instruction[0], instruction[1]), player_number):
                     return False
