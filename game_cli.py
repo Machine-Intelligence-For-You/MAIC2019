@@ -187,13 +187,13 @@ class GameWindow(QMainWindow):
     def WhoWins(self):
 
         if self.rulesgame.gameOneGoing:
-            if (self.players[0].player_pieces_in_hand==0 and self.rulesgame.isPlayerStuck(1)) or self.players[0].captured_pieces==12:
+            if (self.players[0].player_pieces_in_hand==0 and self.rulesgame.isPlayerStuck(0)) or self.players[0].captured_pieces==12:
                 print(f"\nPlayer 0 ({self.players[0].get_name()}) wins")
                 print("Final score : ",self.players[0].get_name()," ",self.players[0].captured_pieces," ",self.players[1].captured_pieces," ",self.players[1].get_name())
                 end = QMessageBox.information(self, "End", f" {self.players[0].name} wins")
 
                 # self.gameOneGoing = False
-            elif (self.players[1].player_pieces_in_hand==0 and self.rulesgame.isPlayerStuck(0)) or self.players[1].captured_pieces==12:
+            elif (self.players[1].player_pieces_in_hand==0 and self.rulesgame.isPlayerStuck(1)) or self.players[1].captured_pieces==12:
                 print(f"\nPlayer 1 ({self.players[1].get_name()}) wins")
                 print("Final score : ",self.players[0].get_name()," ",self.players[0].captured_pieces," ",self.players[1].captured_pieces," ",self.players[1].get_name())
                 end = QMessageBox.information(self, "End", f" {self.players[1].name} wins")
