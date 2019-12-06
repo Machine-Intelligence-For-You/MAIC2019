@@ -175,7 +175,7 @@ class GameWindow(QMainWindow):
             self.board.setDefaultColors()
 
 
-            self.trace.add_action(self.board.currentPlayer, instruction, self.rulesgame.canSteal, self.board.get_board_array(), self.board.score,(self.players[0].player_pieces_in_hand,self.players[1].player_pieces_in_hand),(self.players[0].get_player_name(),self.players[1].get_player_name()))
+            self.trace.add_action(self.board.currentPlayer, instruction, self.rulesgame.canSteal, self.board.get_board_array(), self.board.score,(self.players[0].player_pieces_in_hand,self.players[1].player_pieces_in_hand),(self.players[0].get_name(),self.players[1].get_name()))
             self.WhoWins()
 
 
