@@ -13,6 +13,7 @@ import time
 class GameWindow(QMainWindow):
 
     depth_to_cover = 9
+    automatic_save_game=False
 
     def __init__(self, row, col, players, timeout=.50, sleep_time = .500,parent = None):
         super(GameWindow, self).__init__(parent)
@@ -192,7 +193,7 @@ class GameWindow(QMainWindow):
             self.board.setDefaultColors()
 
 
-            self.trace.add_action(self.board.currentPlayer, instruction, self.rulesgame.canSteal, self.board.get_board_array(), self.board.score,(self.players[0].player_pieces_in_hand,self.players[1].player_pieces_in_hand))
+            self.trace.add_action(self.board.currentPlayer, instruction, self.rulesgame.canSteal, self.board.get_board_array(), self.board.score,(self.players[0].player_pieces_in_hand,self.players[1].player_pieces_in_hand),(self.players[0].get_player_name(),self.players[1].get_player_name()))
             self.WhoWins()
 
 
@@ -253,41 +254,54 @@ class GameWindow(QMainWindow):
         self.board.setDefaultColors()
         name =QtWidgets.QFileDialog.getOpenFileName(self, 'Load Game')
         listBoard = None
+        newnames=[]
         try:
             listBoard = self.trace.load_trace(name[0])
-            
+
             self.resetForNewGame()
             actions = listBoard.get_actions()
             delay, ok = QInputDialog.getDouble(self,'Enter the delay','')
             if ok:
-                newnames=[]
                 try:
-                    if(len(str(name[0]).split("/"))>0):
-                        temp=str(name[0]).split("/")
-                        newnames=temp[len(temp)-1].split(".")[0].split("-")
-                        #self.players[0].set_name(newnames[0])
-                        #self.players[1].set_name(newnames[1])
-                    elif(len(str(name[0]).split("\\"))>1):
-                        temp=str(name[0]).split("\\")
-                        newnames=temp[len(temp)-1].split(".")[0].split("-")
-                        #self.players[0].set_name(newnames[0])
-                        #self.players[1].set_name(newnames[1])
-                except :
-                    newnames=["IA1","IA2"]
+                    newnames=actions[0][6]
+                except:
+                    newnames=[]
+                if len(newnames)==0:
+                    try:
+                        if(len(str(name[0]).split("/"))>0):
+                            temp=str(name[0]).split("/")
+                            newnames=temp[len(temp)-1].split(".")[0].split("-")
+                            #self.players[0].set_name(newnames[0])
+                            #self.players[1].set_name(newnames[1])
+                        elif(len(str(name[0]).split("\\"))>1):
+                            temp=str(name[0]).split("\\")
+                            newnames=temp[len(temp)-1].split(".")[0].split("-")
+                            #self.players[0].set_name(newnames[0])
+                            #self.players[1].set_name(newnames[1])
+                    except :
+                        newnames=["IA1","IA2"]
+
                 self.players[0].set_name(newnames[0])
                 self.players[1].set_name(newnames[1])
                 self.panel.updatePlayersName(newnames)
                 self.loadStartBattle(actions, delay)
+
+
         except:
             print("No file selected or File name isn't on this fomat Player1-Player2.trace")
 
 
     def saveGame(self):
         if self.gameOneGoing:
-            name =QtWidgets.QFileDialog.getSaveFileName(self, 'Save Game')
-            self.trace.write(name[0])
+            if self.automatic_save_game:
+                self.trace.write(self.players[0].get_player_name()+"-"+self.players[1].get_player_name())
+            else:
+                name =QtWidgets.QFileDialog.getSaveFileName(self, 'Save Game')
+                self.trace.write(name[0])
         else:
             warning = QMessageBox.warning(self, "Warning", "No game ongoing")
+
+
 
     def exitGame(self):
         sys.exit(app.exec_())

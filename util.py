@@ -12,8 +12,8 @@ class Trace:
         self.actions = []
         self.score = [0,0]
 
-    def add_action(self, player, action, game_step, board, score,pieces_in_hands):
-        self.actions.append((player, action, game_step, board, score,pieces_in_hands))
+    def add_action(self, player, action, game_step, board, score,pieces_in_hands,players_names):
+        self.actions.append((player, action, game_step, board, score,pieces_in_hands,players_names))
 
     def write(self, f):
         pickle.dump(self, open(f + ".trace", 'wb'))
