@@ -225,7 +225,9 @@ class GameWindow(QMainWindow):
             app.processEvents()
             hit += 1
             time.sleep(delay)
-            print(f"\nIt's the {hit}th hit played by Player {self.board.currentPlayer} ({self.players[self.board.currentPlayer].get_name()})")
+
+            print("\n",self.players[self.board.currentPlayer].get_name(),"(Player ",self.board.currentPlayer," plays ",instruction)
+            print(f"It's the {hit}th hit played by Player {self.board.currentPlayer} ({self.players[self.board.currentPlayer].get_name()})")
 
             self.rulesgame.play(instruction)
             self.WhoWins()
