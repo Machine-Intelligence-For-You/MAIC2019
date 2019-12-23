@@ -1,0 +1,18 @@
+#! /bin/bash	
+echo $1
+
+for a in Poule$1/*.py; do
+    name1=${a##*/}
+    for b in Poule$1/*.py; do
+	name2=${b##*/}
+	if  [ $name1 = $name2 ];
+	then
+    	    echo "Same AI" "$name1" "$name2"
+	else
+            echo "$name1" "Versus" "$name2"
+	    python game_cli_timeout.py -ai0 $a -ai1 $b -s 0.0
+	fi
+    done
+done
+
+

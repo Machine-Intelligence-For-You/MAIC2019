@@ -1,0 +1,1 @@
+Optional: You can adapt the bash script run_games to automate the execution of group matches.
