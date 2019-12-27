@@ -6,12 +6,12 @@ Third edition of the Mify Artificial Intelligence Contest #MIFY #AAAIBenin
 ## The Game
 
 The game chosen for this edition is Yote. It is played by 2 players on a board generally either 6 squares out of 5 or 5
-squares out of 5. Each player has 12 pieces of different colours. The object of the game is to capture all the opposing 
-pieces. More information on the rules of the game is available [here](http://www.lecomptoirdesjeux.com/yote.htm).
+squares out of 5. Each player has 12 pieces of different colours. The aim of the game is to capture all the opponent 
+pieces. More information on the competition and the rules of the game is available [here](https://maic.mify-ai.com/maic2019).
 
 ## Setup
 
-The game was written in **Python** and works with versions greater than or equal to **3.6+**.
+The game was implemented in **Python** and works with versions greater than or equal to **3.6+**.
 
 ### Get Python and dependencies
 
